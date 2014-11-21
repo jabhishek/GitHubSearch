@@ -128,7 +128,7 @@ gulp.task('js', ['clean:js', 'jshint'], function () {
 gulp.task('templates', ['clean:js'], function () {
     return gulp.src('client/app/**/*.html')
         .pipe($gulp.using())
-        .pipe(templateCache({ module: 'HousePointsApp' }))
+        .pipe(templateCache({ module: 'GithubSearch' }))
         .pipe(ngAnnotate())
         .pipe($gulp.uglify())
         .pipe($gulp.rev())

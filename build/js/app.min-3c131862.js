@@ -1,6 +1,6 @@
 (function () {
     'use strict';
-    angular.module('HousePointsApp', ['ui.router', 'ngCookies', 'restangular', 'ngAnimate', 'LocalStorageModule'])
+    angular.module('GithubSearch', ['ui.router', 'ngCookies', 'restangular', 'ngAnimate', 'LocalStorageModule'])
         .constant('StateErrorCodes', {
             Unauthenticated: 'User not authenticated',
             Unauthorized: 'Unauthorized'
@@ -39,7 +39,7 @@
             name: ''
         };
     });
-})(angular.module('HousePointsApp'));
+})(angular.module('GithubSearch'));
 (function (app) {
     'use strict';
     app.directive('ajNavbar', function () {
@@ -53,7 +53,7 @@
             controllerAs: 'navBarVm'
         };
     });
-})(angular.module('HousePointsApp'));
+})(angular.module('GithubSearch'));
 (function (app) {
     'use strict';
     app.directive('loader', ["$rootScope", "$timeout", function ($rootScope, $timeout) {
@@ -96,4 +96,4 @@
             }
         };
     }]);
-})(angular.module('HousePointsApp'));
+})(angular.module('GithubSearch'));

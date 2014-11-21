@@ -6,4 +6,4 @@
             name: ''
         };
     });
-})(angular.module('HousePointsApp'));
+})(angular.module('GithubSearch'));
