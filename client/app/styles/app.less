@@ -134,14 +134,15 @@ form.ng-submitted {
 
 .button {
     background: @button-colour;
-    border: 1px solid @page-background;
-    transition: 0.3s;
+    border: 1px solid darken(@button-colour, 12%);
+    transition: 0.3s background;
+    padding: 0.2rem 2rem;
 
     &:focus {
         outline: none;
     }
     &:hover {
-        background: darken(@button-colour, 10%);
+        background: darken(@button-colour, 12%);
         cursor: pointer;
     }
 }
