@@ -1,0 +1,87 @@
+.navbar.flex {
+    background: @header-background;
+    color: @header-color;
+    line-height: @navbar-height;
+    position: relative;
+    z-index: 999;
+
+    .container {
+        .display(flex);
+        .flex-direction(column);
+        @media @tablets {
+            .flex-direction(row);
+        }
+    }
+
+    .navbar-header {
+        padding-left: .5rem;
+        .display(flex);
+        .flex-grow(1);
+        @media @tablets {
+            padding-left: 0;
+        }
+        .user {
+            margin-right: 1rem;
+        }
+
+        .left {
+            .flex-grow(1);
+        }
+
+        .nav-toggle {
+            cursor: pointer;
+            background: @button-colour;
+            padding: 0 1.5rem;
+            height: @navbar-height;
+            display: inline-block;
+            @media @tablets {
+                display: none;
+            }
+        }
+    }
+
+    nav {
+        @media @tablets {
+            display: inline-block !important;
+            float: right;
+        }
+
+        &.collapsed {
+            display: none;
+        }
+
+        ul {
+            line-height: 3rem;
+            border-top: 0.1rem solid @header-background;
+            @media @tablets {
+                line-height: @navbar-height;
+                border-top: none;
+            }
+            li {
+                @media @tablets {
+                    display: inline-block;
+                }
+
+                a {
+                    background: @header-background;
+                    color: @header-color;
+                    display: block;
+                    text-decoration: none;
+                    padding: 0 0.5rem;
+                    @media @tablets {
+                        display: inline-block;
+                        padding: 0 1rem;
+                        border-right: 0.1rem solid #333;
+                        transition: 0.3s;
+                    }
+
+                    &.active {
+                        background: @button-colour;
+                        color: @page-color;
+                    }
+                }
+            }
+        }
+    }
+}
+

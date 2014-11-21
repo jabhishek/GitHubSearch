@@ -1,0 +1,20 @@
+<header class="navbar flex">
+    <div class="container">
+        <div class="navbar-header clearfix">
+            <h1 class="left">Kidzy</h1>
+
+            <div class="right">
+                <span class="nav-toggle" ng-click="navBarVm.isCollapsed = !navBarVm.isCollapsed">
+                 <i class="fa fa-lg fa-bars"></i>
+            </span>
+            </div>
+        </div>
+        <nav ng-class="{ 'collapsed': navBarVm.isCollapsed}">
+            <ul class="items">
+                <li class="home">
+                    <a ui-sref="home" ui-sref-active="active" ng-click="navBarVm.isCollapsed = true">Home</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>

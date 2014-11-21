@@ -1,0 +1,151 @@
+@import 'globals/lesshat.less';
+@import 'globals/variables.less';
+@import 'globals/mixins.less';
+@import 'globals/reset.less';
+
+.clearfix {
+    &:after, &:before {
+        content: " ";
+        clear: both;
+    }
+}
+
+html {
+    font-family: @font-family;
+    background-color: @page-background;
+    color: #555;
+    color: @page-color;
+    font-size: 62.5%;
+    height: 100%;
+    min-width: 300px;
+}
+
+body {
+    .font-size(1.5);
+    line-height: 1.4;
+    height: 100%;
+}
+
+input {
+    outline: none;
+    border: 1px solid #444;
+    font-family: @font-family;
+}
+
+ul {
+    list-style-type: none;
+}
+
+a {
+    color: @link-colour;
+}
+
+h1 {
+    font-size: 3rem;
+}
+
+h2 {
+    font-size: 2rem;
+}
+
+.view, .container {
+    margin: 0 auto;
+    height: 100%;
+    width: 100%;
+    min-width: 300px;
+    @media @tablets {
+        width: 72rem;
+    }
+    @media @desktop {
+        width: 93rem;
+    }
+}
+
+.view {
+    padding: 0 0.5rem;
+    margin-top: 5rem;
+    display: block;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    height: calc(~'100% - @{navbar-height}');
+
+    @media @tablets {
+        padding: 0;
+    }
+}
+
+/* leaving animations ----------------------------------------- */
+
+/* entering animations --------------------------------------- */
+@keyframes slideInRight {
+    from {
+        transform: translateX(5%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+/* scale up */
+@keyframes scaleUp {
+    from {
+        opacity: 0.3;
+        -webkit-transform: scale(0.8);
+    }
+}
+
+.view-animate.ng-enter {
+    animation: slideInRight 0.3s both ease-in;
+    z-index: 8888;
+}
+
+.view-animate.ng-leave {
+    transform: translateX(-100%)
+}
+
+.not-found-page, .unauthorized-page {
+    padding: 2rem 0;
+    h1 {
+        margin-bottom: 0.5rem;
+    }
+    .fa-warning {
+        color: red;
+        margin-right: 1rem;
+    }
+}
+
+form fieldset {
+    text-align: left;
+    span.error-message {
+        color: red;
+        display: block;
+    }
+}
+
+form.ng-submitted {
+    input.ng-invalid, input.ng-invalid:focus {
+        outline: none;
+        border: 0.1rem solid #ff7575;
+    }
+}
+
+.button {
+    background: @button-colour;
+    border: 1px solid @page-background;
+    transition: 0.3s;
+
+    &:focus {
+        outline: none;
+    }
+    &:hover {
+        background: darken(@button-colour, 10%);
+        cursor: pointer;
+    }
+}
+
+@import '/client/app/Common/NavBar/NavBar.less';
+@import '/client/app/Common/directives/loader/loader.less';
+@import '/client/app/home/home.less';
