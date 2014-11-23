@@ -1,6 +1,53 @@
 <form id="searchform" name="searchform" novalidate
-      ng-submit="homeVm.submitSearch(searchform.$valid, homeVm.searchText)">
-    <label for="search">Repository Name:</label>
-    <input type="text" name="search" id="search" ng-model="homeVm.searchText" required/>
-    <input class="button" type="submit" value="Submit"/>
+      ng-submit="homeVm.submitSearch(searchform.$valid, homeVm.repository)">
+
+    <div class="errors">
+        <span class="error-message user-error" ng-if="searchform.$submitted && searchform.userName.$invalid">User name is required.</span>
+        <span class="error-message repName-error" ng-if="searchform.$submitted && searchform.repName.$invalid">Repository name is required.</span>
+        <span class="error-message response-error" ng-if="homeVm.error">{{ homeVm.error.message }}</span>
+    </div>
+    <div class="field">
+        <label for="userName">User Name:</label>
+        <input type="text" name="userName" id="userName" ng-model="homeVm.repository.user" required/>
+    </div>
+
+    <div class="field">
+        <label for="repName">Repository Name:</label>
+        <input type="text" name="repName" id="repName" ng-model="homeVm.repository.name" required/>
+    </div>
+    <div class="field">
+        <input class="button" type="submit" value="Submit"/>
+    </div>
 </form>
+
+
+    <div class="loading" ng-if="homeVm.isLoading">
+        <span><i class="fa fa-spin fa-refresh"></i>Loading....</span>
+    </div>
+<div class="repository-content" ng-if="homeVm.data">
+    <div class="data-field">
+        <span class="label">Url:</span>
+        <span class="data"><a ng-href="{{homeVm.data.html_url}}"> {{ homeVm.data.html_url }}</a></span>
+    </div>
+    <div class="data-field">
+        <span class="label">Description:</span>
+        <span class="data">{{ homeVm.data.description }}</span>
+    </div>
+    <div class="data-field">
+        <span class="label">Forks:</span>
+        <span class="data">{{ homeVm.data.forks_count }}</span>
+    </div>
+    <div class="data-field">
+        <span class="label">Stargazers:</span>
+        <span class="data">{{ homeVm.data.stargazers_count }}</span>
+    </div>
+    <div class="data-field">
+        <span class="label">Watchers:</span>
+        <span class="data">{{ homeVm.data.watchers_count }}</span>
+    </div>
+    <div class="data-field">
+        <span class="label">Open Issues:</span>
+        <span class="data">{{ homeVm.data.open_issues_count }}</span>
+    </div>
+</div>
+

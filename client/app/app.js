@@ -1,13 +1,12 @@
 (function () {
     'use strict';
-    angular.module('GithubSearch', ['ui.router', 'ngCookies', 'restangular', 'ngAnimate', 'LocalStorageModule'])
+    angular.module('GithubSearch', ['ui.router', 'ngAnimate', 'LocalStorageModule'])
         .constant('StateErrorCodes', {
             Unauthenticated: 'User not authenticated',
             Unauthorized: 'Unauthorized'
         })
         .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, $animateProvider) {
             $animateProvider.classNameFilter(/animate/);
-
             $stateProvider
                 .state('home', {
                     url: '/',
