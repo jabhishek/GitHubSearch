@@ -12,9 +12,13 @@
                     url: '/',
                     templateUrl: 'home/home.html',
                     controller: 'homeController as homeVm'
+                }).state('issues', {
+                    url: '/issues/:user/:name/:page',
+                    templateUrl: 'issues/issues.html',
+                    controller: 'issuesController as issuesVm'
                 });
 
-            $urlRouterProvider.otherwise('/home');
+            $urlRouterProvider.otherwise('/');
 
             $locationProvider.html5Mode({
                 enabled: true,

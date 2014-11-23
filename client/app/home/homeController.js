@@ -16,15 +16,12 @@
                 return;
             }
             vm.isLoading = true;
-            searchService.searchByRepository(repository).then(function (data) {
-                console.log('resolved');
-                console.log(data);
+            searchService.searchRepository(repository.user, repository.name).then(function (data) {
                 vm.data = data.data.items[0];
                 vm.isLoading = false;
             }, function (err) {
                 vm.isLoading = false;
                 vm.data = null;
-                console.log('rejected');
                 if (err.status === 422) {
                     vm.error = {
                         message: 'Repository not found.'

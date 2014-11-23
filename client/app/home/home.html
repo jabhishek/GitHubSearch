@@ -45,9 +45,7 @@
         <span class="label">Watchers:</span>
         <span class="data">{{ homeVm.data.watchers_count }}</span>
     </div>
-    <div class="data-field">
-        <span class="label">Open Issues:</span>
-        <span class="data">{{ homeVm.data.open_issues_count }}</span>
-    </div>
+
+    <a ui-sref="issues({user: homeVm.repository.user, name: homeVm.repository.name, page: 1})"> View All Issues</a>
 </div>
 

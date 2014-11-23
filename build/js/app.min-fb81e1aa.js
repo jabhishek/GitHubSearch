@@ -12,9 +12,13 @@
                     url: '/',
                     templateUrl: 'home/home.html',
                     controller: 'homeController as homeVm'
+                }).state('issues', {
+                    url: '/issues/:user/:name/:page',
+                    templateUrl: 'issues/issues.html',
+                    controller: 'issuesController as issuesVm'
                 });
 
-            $urlRouterProvider.otherwise('/home');
+            $urlRouterProvider.otherwise('/');
 
             $locationProvider.html5Mode({
                 enabled: true,
@@ -48,15 +52,12 @@
                 return;
             }
             vm.isLoading = true;
-            searchService.searchByRepository(repository).then(function (data) {
-                console.log('resolved');
-                console.log(data);
+            searchService.searchRepository(repository.user, repository.name).then(function (data) {
                 vm.data = data.data.items[0];
                 vm.isLoading = false;
             }, function (err) {
                 vm.isLoading = false;
                 vm.data = null;
-                console.log('rejected');
                 if (err.status === 422) {
                     vm.error = {
                         message: 'Repository not found.'
@@ -70,6 +71,62 @@
             });
             console.log('search');
         }
+    }]);
+})(angular.module('GithubSearch'));
+(function (app) {
+    'use strict';
+    app.controller('issuesController', ["searchService", "$stateParams", "$state", function (searchService, $stateParams, $state) {
+        var vm = this;
+        console.log($stateParams);
+
+        vm.repository = {
+            user: $stateParams.user,
+            name: $stateParams.name,
+            issues: null,
+            totalIssues: null
+        };
+
+        var page = parseInt($stateParams.page);
+        vm.pagination = {
+            currentPage: page
+        };
+        vm.isLoading = true;
+        loadIssues(page);
+
+        vm.goToPreviousPage = function() {
+            var previouPage = vm.pagination.currentPage > 1 ? vm.pagination.currentPage - 1 : 1;
+            $state.go('issues', {user: $stateParams.user, name: $stateParams.name, page: previouPage});
+            vm.pagination.currentPage = previouPage;
+        };
+
+        vm.goToNextPage = function() {
+            var nextPage = vm.pagination.currentPage < vm.pagination.totalPages ? vm.pagination.currentPage + 1 : vm.pagination.totalPages;
+            $state.go('issues', {user: $stateParams.user, name: $stateParams.name, page: nextPage});
+            vm.pagination.currentPage = nextPage;
+        };
+
+        function loadIssues() {
+            searchService.searchIssues(vm.repository.user, vm.repository.name, page).then(function (data) {
+                console.log(data);
+                vm.repository.issues = data.data.items;
+                vm.repository.totalIssues = data.data.total_count;
+                vm.pagination.totalPages = Math.ceil(vm.repository.totalIssues / 30);
+                vm.isLoading = false;
+            }, function (err) {
+                vm.isLoading = false;
+                vm.repository.issues = null;
+                if (err.status === 422) {
+                    vm.error = {
+                        message: 'Repository not found.'
+                    }
+                } else {
+                    vm.error = {
+                        message: err.statusText
+                    }
+                }
+            });
+        }
+
     }]);
 })(angular.module('GithubSearch'));
 (function (app) {
@@ -95,25 +152,35 @@
 
         var obj = {};
         var searchResult = {};
-        obj.searchByRepository = function (repository) {
+        obj.searchRepository = function (user, name) {
             var defer = $q.defer();
-            if (searchResult && searchResult.repositoryName === repository.user + '/' + repository.name) {
+            if (searchResult && searchResult.repositoryName === user + '/' + name) {
                 console.log('get from cache');
                 defer.resolve(searchResult.data);
             } else {
-                var url = 'https://api.github.com/search/repositories?q=repo:' + repository.user + '/' + repository.name;
+                var url = 'https://api.github.com/search/repositories?q=repo:' + user + '/' + name;
                 $http.get(url).then(function (data) {
                     searchResult = {
-                        repositoryName: repository.user + '/' + repository.name,
+                        repositoryName: user + '/' + name,
                         data: data
                     };
                     defer.resolve(data);
                 }, function (err) {
                     searchResult = null;
-                    console.log('error');
                     defer.reject(err);
                 });
             }
+            return defer.promise;
+        };
+        obj.searchIssues = function (user, name, page) {
+            page = page || 1;
+            var defer = $q.defer();
+            var url = 'https://api.github.com/search/issues?q=repo:' + user + '/' + name + '&page=' + page;
+            $http.get(url).then(function (issues) {
+                defer.resolve(issues);
+            }, function (err) {
+                defer.reject(err);
+            });
             return defer.promise;
         };
 

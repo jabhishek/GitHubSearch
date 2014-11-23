@@ -7,25 +7,35 @@
 
         var obj = {};
         var searchResult = {};
-        obj.searchByRepository = function (repository) {
+        obj.searchRepository = function (user, name) {
             var defer = $q.defer();
-            if (searchResult && searchResult.repositoryName === repository.user + '/' + repository.name) {
+            if (searchResult && searchResult.repositoryName === user + '/' + name) {
                 console.log('get from cache');
                 defer.resolve(searchResult.data);
             } else {
-                var url = 'https://api.github.com/search/repositories?q=repo:' + repository.user + '/' + repository.name;
+                var url = 'https://api.github.com/search/repositories?q=repo:' + user + '/' + name;
                 $http.get(url).then(function (data) {
                     searchResult = {
-                        repositoryName: repository.user + '/' + repository.name,
+                        repositoryName: user + '/' + name,
                         data: data
                     };
                     defer.resolve(data);
                 }, function (err) {
                     searchResult = null;
-                    console.log('error');
                     defer.reject(err);
                 });
             }
+            return defer.promise;
+        };
+        obj.searchIssues = function (user, name, page) {
+            page = page || 1;
+            var defer = $q.defer();
+            var url = 'https://api.github.com/search/issues?q=repo:' + user + '/' + name + '&page=' + page;
+            $http.get(url).then(function (issues) {
+                defer.resolve(issues);
+            }, function (err) {
+                defer.reject(err);
+            });
             return defer.promise;
         };
 
