@@ -1,4 +1,4 @@
-.issues {
+.issues, .repos {
     h2 {
         margin: 1rem 0;
     }
@@ -8,7 +8,46 @@
             background-color: #eee;
             border-radius: 5px;
             margin-top: 3px;
-            display: flex;
+            .display(flex);
+            .align-items(center);
+            padding: 3px 5px;
+            &.open {
+                background: lightgreen;
+            }
+
+            .title {
+                width: 100%;
+            }
+
+            .user {
+                .display(flex);
+                .flex-direction(column);
+                margin-right: 20px;
+                text-align: left;
+
+                .name {
+                    font-size: 1.1rem;
+                }
+
+                .user-image {
+                    height: 3rem;
+                    width: 3rem;
+                    background-size: contain;
+                    background-clip: border-box;
+                    background-repeat: no-repeat;
+                    margin: 3px 3px 3px 3px;
+                    border-radius: 50%;
+                }
+
+            }
+
+            .state {
+                text-align: right;
+                width: 7rem;
+            }
+            .user {
+                width: 7rem;
+            }
         }
     }
 }

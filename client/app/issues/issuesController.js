@@ -4,6 +4,8 @@
         var vm = this;
         console.log($stateParams);
 
+        vm.showOpenIssuesOnly = false;
+
         vm.repository = {
             user: $stateParams.user,
             name: $stateParams.name,
@@ -16,7 +18,9 @@
             currentPage: page
         };
         vm.isLoading = true;
-        loadIssues(page);
+        vm.loadIssues = loadIssues;
+
+        loadIssues();
 
         vm.goToPreviousPage = function() {
             var previouPage = vm.pagination.currentPage > 1 ? vm.pagination.currentPage - 1 : 1;
@@ -31,7 +35,7 @@
         };
 
         function loadIssues() {
-            searchService.searchIssues(vm.repository.user, vm.repository.name, page).then(function (data) {
+            searchService.searchIssues(vm.repository.user, vm.repository.name, page, vm.showOpenIssuesOnly).then(function (data) {
                 console.log(data);
                 vm.repository.issues = data.data.items;
                 vm.repository.totalIssues = data.data.total_count;

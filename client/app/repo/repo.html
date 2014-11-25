@@ -1,0 +1,30 @@
+<h2>All Issues for {{ repoVm.repository.user + '/' + repoVm.repository.name }}</h2>
+
+<div class="loading" ng-if="repoVm.isLoading">
+    <span><i class="fa fa-spin fa-refresh"></i>Loading....</span>
+</div>
+<div class="repository-content" ng-if="repoVm.repository.data">
+    <div class="data-field">
+        <span class="label">Url:</span>
+        <span class="data"><a ng-href="{{repoVm.repository.data.html_url}}"> {{ repoVm.repository.data.html_url }}</a></span>
+    </div>
+    <div class="data-field">
+        <span class="label">Description:</span>
+        <span class="data">{{ repoVm.repository.data.description }}</span>
+    </div>
+    <div class="data-field">
+        <span class="label">Forks:</span>
+        <span class="data">{{ repoVm.repository.data.forks_count }}</span>
+    </div>
+    <div class="data-field">
+        <span class="label">Stargazers:</span>
+        <span class="data">{{ repoVm.repository.data.stargazers_count }}</span>
+    </div>
+    <div class="data-field">
+        <span class="label">Watchers:</span>
+        <span class="data">{{ repoVm.repository.data.watchers_count }}</span>
+    </div>
+
+    <a ui-sref="issues({user: repoVm.repository.user, name: repoVm.repository.name, page: 1})"> View All Issues</a>
+</div>
+
