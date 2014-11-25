@@ -2,7 +2,7 @@
  * Created by ajain on 21/11/2014.
  */
 (function (app) {
-    "use strict";
+    'use strict';
     app.factory('searchService', function ($http, $q) {
 
         var obj = {};
@@ -41,9 +41,9 @@
         obj.searchIssues = function (user, name, page, showOpenIssues) {
             page = page || 1;
             var defer = $q.defer();
-            var url = 'https://api.github.com/search/issues?q=repo:'
-                + user + '/' + name
-                + (showOpenIssues ? "+state:open" : "") + '&page=' + page;
+            var url = 'https://api.github.com/search/issues?q=repo:' +
+                user + '/' + name +
+                (showOpenIssues ? '+state:open' : '') + '&page=' + page;
             console.log(url);
             $http.get(url).then(function (issues) {
                 defer.resolve(issues);

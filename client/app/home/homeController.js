@@ -48,11 +48,11 @@
                 if (err.status === 422) {
                     vm.error = {
                         message: 'Repository not found.'
-                    }
+                    };
                 } else {
                     vm.error = {
                         message: err.statusText
-                    }
+                    };
                 }
 
             });
